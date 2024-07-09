@@ -1,0 +1,9 @@
+{
+	"name": "adf-dev-ADF-CICD-Demo",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "681e0ddd-dbf4-44e1-a113-c6fafe59bfc7",
+		"tenantId": "f72184e0-edd5-4aa1-bb14-e1f24dd84827"
+	}
+}
