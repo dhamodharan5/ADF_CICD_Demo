@@ -14,6 +14,10 @@
 		"ls_abs_dev_properties_typeProperties_connectionString_secretName": {
 			"type": "string",
 			"defaultValue": "dev-sa-access-connector"
+		},
+		"ev_trigger_1_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/34024514-b3ac-4984-a35f-1d1318119ad5/resourceGroups/rg_dev_ADF_CICD_Demo/providers/Microsoft.Storage/storageAccounts/sadevadfcicdpoc"
 		}
 	},
 	"variables": {
@@ -130,7 +134,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Delete from target",
+								"activity": "Lookup if file exists",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -194,33 +198,6 @@
 						]
 					},
 					{
-						"name": "Delete from target",
-						"type": "Delete",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "DelimitedText_out",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"enableLogging": false,
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"wildcardFileName": "*.csv",
-								"enablePartitionDiscovery": false
-							}
-						}
-					},
-					{
 						"name": "Wait1",
 						"type": "Wait",
 						"dependsOn": [
@@ -235,6 +212,37 @@
 						"typeProperties": {
 							"waitTimeInSeconds": 1
 						}
+					},
+					{
+						"name": "Lookup if file exists",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"dataset": {
+								"referenceName": "DelimitedText_in",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
 					}
 				],
 				"policy": {
@@ -246,6 +254,38 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DelimitedText_in')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText_out')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ev_trigger_1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Check input path for the file to be created",
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Copy_Data",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/input/blobs/",
+					"blobPathEndsWith": ".csv",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('ev_trigger_1_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Copy_Data')]"
 			]
 		}
 	]

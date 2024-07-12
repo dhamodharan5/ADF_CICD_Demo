@@ -11,6 +11,9 @@
 		"ls_keyvault_dev_properties_typeProperties_baseUrl": {
 			"value": "https://kv-dev-ADF-CICD-Demo.vault.azure.net/"
 		},
+		"ev_trigger_1_properties_typeProperties_scope": {
+			"value": "/subscriptions/34024514-b3ac-4984-a35f-1d1318119ad5/resourceGroups/rg_dev_ADF_CICD_Demo/providers/Microsoft.Storage/storageAccounts/sadevadfcicdpoc"
+		},
 		"containerUri": {
 			"value": ""
 		},
