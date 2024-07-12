@@ -280,7 +280,7 @@
 			"properties": {
 				"description": "Check input path for the file to be created",
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -294,7 +294,7 @@
 				"typeProperties": {
 					"blobPathBeginsWith": "/input/blobs/",
 					"blobPathEndsWith": "file.csv",
-					"ignoreEmptyBlobs": true,
+					"ignoreEmptyBlobs": false,
 					"scope": "[parameters('ev_trigger_1_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
