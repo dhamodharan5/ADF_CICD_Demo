@@ -280,7 +280,7 @@
 			"properties": {
 				"description": "Check input path for the file to be created",
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -293,7 +293,6 @@
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
 					"blobPathBeginsWith": "/input/blobs/",
-					"blobPathEndsWith": "file.csv",
 					"ignoreEmptyBlobs": false,
 					"scope": "[parameters('ev_trigger_1_properties_typeProperties_scope')]",
 					"events": [
