@@ -69,22 +69,6 @@
 				]
 			},
 			{
-				"name": "Wait1",
-				"type": "Wait",
-				"dependsOn": [
-					{
-						"activity": "Copy data from input to output",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 1
-				}
-			},
-			{
 				"name": "Lookup if file exists",
 				"type": "Lookup",
 				"dependsOn": [],
@@ -111,6 +95,38 @@
 					"dataset": {
 						"referenceName": "DelimitedText_in",
 						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Delete input file",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "Copy data from input to output",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DelimitedText_in",
+						"type": "DatasetReference"
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
 					}
 				}
 			}
