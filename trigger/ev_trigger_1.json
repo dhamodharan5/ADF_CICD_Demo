@@ -15,7 +15,7 @@
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/input/blobs/",
-			"blobPathEndsWith": ".csv",
+			"blobPathEndsWith": "file.csv",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/34024514-b3ac-4984-a35f-1d1318119ad5/resourceGroups/rg_dev_ADF_CICD_Demo/providers/Microsoft.Storage/storageAccounts/sadevadfcicdpoc",
 			"events": [
