@@ -1,0 +1,26 @@
+{
+	"name": "ev_trigger_1",
+	"properties": {
+		"description": "Check input path for the file to be created",
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Copy_Data",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/input/blobs/",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/34024514-b3ac-4984-a35f-1d1318119ad5/resourceGroups/rg_dev_ADF_CICD_Demo/providers/Microsoft.Storage/storageAccounts/sadevadfcicdpoc",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
