@@ -3,7 +3,7 @@
 	"properties": {
 		"description": "Check input path for the file to be created",
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
